@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import queryString from 'query-string';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import TodoList from '../../components/TodoList';
 
 ListPage.propTypes = {
@@ -25,9 +26,14 @@ function ListPage(props) {
         },
     ];
 
+    const location = useLocation();
+    const history = useHistory();
+    const match = useRouteMatch();
     const [todoList, setTodoList] = useState(initTodoList);
-
-    const [filterStatus, setFilterStatus] = useState('all');
+    const [filterStatus, setFilterStatus] = useState(() => {
+        const param = queryString.parse(location.search);
+        return param.status || 'all';
+    });
 
     const handleTodoClick = (todo, idx) => {
         const newTodoList = [...todoList];
@@ -39,15 +45,34 @@ function ListPage(props) {
     };
 
     const handleShowAllClick = () => {
-        setFilterStatus('all');
+        // setFilterStatus('all');
+        const queryParams = { status: 'all'};
+        history.push({
+            pathname: match.path,
+            search: queryString.stringify(queryParams)
+        });
     };
 
     const handleShowCompletedClick = () => {
-        setFilterStatus('completed');
+        // setFilterStatus('completed');
+        const queryParams = { status: 'completed'};
+        history.push({
+            pathname: match.path,
+            search: queryString.stringify(queryParams)
+        })
     };
 
+    useEffect(() => {
+        const param = queryString.parse(location.search);
+        setFilterStatus(param.status || 'all');
+    }, [location.search]);
     const handleShowNewClick = () => {
-        setFilterStatus('new');
+        // setFilterStatus('new');
+        const queryParams = { status: 'new'};
+        history.push({
+            pathname: match.path,
+            search: queryString.stringify(queryParams)
+        })
     };
 
     const renderTodoList = todoList.filter(todo => filterStatus === 'all' || filterStatus === todo.status);
