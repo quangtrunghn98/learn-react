@@ -1,6 +1,7 @@
 import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from './components/NotFound';
 import AlbumFeature from './features/Album';
+import CounterFeature from './features/Counter';
 // import './App.css';
 import TodoFeature from './features/Todo';
 
@@ -17,6 +18,7 @@ function App() {
       <Switch>
         <Redirect from="/home" to="/" exact />
 
+        <Route path="/" component={CounterFeature} />
         <Route path="/albums" component={AlbumFeature} />
         <Route path="/todos" component={TodoFeature} />
 
