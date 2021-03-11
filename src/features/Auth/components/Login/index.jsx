@@ -1,5 +1,5 @@
 import { unwrapResult } from '@reduxjs/toolkit';
-import { login, register } from 'features/Auth/userSlice';
+import { login } from 'features/Auth/userSlice';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -19,6 +19,7 @@ function Login(props) {
       const action = login(values);
       const resultAction = await dispatch(action);
       const user = unwrapResult(resultAction);
+      console.log(user);
 
       const { closeDialog } = props;
       if (closeDialog) {

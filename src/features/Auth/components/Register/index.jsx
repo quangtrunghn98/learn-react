@@ -22,6 +22,7 @@ function Register(props) {
       const action = register(values);
       const resultAction = await dispatch(action);
       const user = unwrapResult(resultAction);
+      console.log(user);
 
       const { closeDialog } = props;
       if (closeDialog) {
