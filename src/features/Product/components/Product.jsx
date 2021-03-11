@@ -9,7 +9,7 @@ Product.propTypes = {
 
 function Product({ product }) {
   const thumbnailUrl = product.thumbnail
-    ? `${STATIC_HOST}${product?.url}`
+    ? `${STATIC_HOST}${product?.thumbnail.url}`
     : THUMBNAIL_PLACEHOLDER;
   return (
     <Box padding={1}>
