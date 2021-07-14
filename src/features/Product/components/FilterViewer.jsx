@@ -52,7 +52,7 @@ const FILTER_LIST = [
   },
   {
     id: 3,
-    getLabel: (filters) => 'Khoảng giá',
+    getLabel: (filters) =>`Từ ${filters.salePrice_gte} đến ${filters.salePrice_lte}`,
     isActive: () => true,
     isVisible: (filters) =>
       Object.keys(filters).includes('salePrice_lte') &&
@@ -94,6 +94,7 @@ function FilterViewer({ filters = {}, onChange = null }) {
       {FILTER_LIST.filter((x) => x.isVisible(filters)).map((x) => (
         <li key={x.id}>
           <Chip
+            size='small'
             label={x.getLabel(filters)}
             color={x.isActive(filters) ? 'primary' : 'default'}
             clickable={!x.isRemoveAble}
