@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
 
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(2),
 
     '& > span': {
       marginLeft: theme.spacing(1),
@@ -52,8 +52,8 @@ function FilterByPrice({ onChange }) {
     if (onChange) onChange(priceValues);
   };
   return (
-    <Box classNames={classes.root}>
-      <Typography>Chọn khoảng giá</Typography>
+    <Box className={classes.root}>
+      <Typography variant="subtitle2">Chọn khoảng giá</Typography>
 
       <Box className={classes.range}>
         <TextField
