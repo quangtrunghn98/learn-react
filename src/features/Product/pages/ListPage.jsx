@@ -7,6 +7,8 @@ import ProductList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import ProductSort from '../components/ProductSort';
 import FilterViewer from '../components/FilterViewer';
+import { useHistory, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
 ListPage.propTypes = {};
 
@@ -33,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
 
 function ListPage(props) {
   const classes = useStyles();
+
+  const history = useHistory();
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
+
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -40,11 +47,20 @@ function ListPage(props) {
     total: 10,
     page: 1,
   });
-  const [filters, setFilters] = useState({
-    _page: 1,
-    _limit: 9,
-    _sort: "salePrice:ASC",
-  });
+
+  const [filters, setFilters] = useState(() => ({
+    ...queryParams,
+    _limit: Number.parseInt(queryParams._limit) || 9,
+    _page: Number.parseInt(queryParams._page) || 1,
+    _sort: "salePrice:ASC"
+  }));
+
+  useEffect(() => {
+    history.push({
+      pathname: history.location.pathname,
+      search: queryString.stringify(filters),
+    })
+  }, [history, filters]);
 
   useEffect(() => {
     (async () => {
